@@ -1,0 +1,7 @@
+✅ **Imagens extraídas com sucesso!**
+
+Criei uma nova pasta chamada `assets/extracted_pdf_images` e extraí **300 imagens** soltas do arquivo `Cópia de brwaxx_2024.pdf`.
+
+As imagens estão nomeadas sequencialmente por página (ex: `image_p1_1.jpeg`, `image_p10_5.png`).
+
+Você pode acessá-las diretamente nessa pasta agora.

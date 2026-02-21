@@ -1,0 +1,4 @@
+# Plugin Architecture Configuration
+structure: {agents: "./agents/*.md", skills: "./skills/*/SKILL.md", commands: "./commands/*.md"}
+manifest: {file: "plugin.json", required: [name, version, description]}
+sasmp_version: "1.3.0"

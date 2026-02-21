@@ -1,0 +1,13 @@
+✅ **Overlay de Projetos Integrado!**
+
+Agora, ao clicar **duas vezes** em uma imagem do grid que tenha correspondência no PDF, abre-se uma **tela de detalhes completa**.
+
+**O que foi feito:**
+1.  **Extração de Conteúdo**: Li e processei todo o texto do PDF `Cópia de brwaxx_2024.pdf`.
+2.  **Mapeamento de Metadados**: Criei o arquivo `project_metadata.json` ligando as imagens (ex: `Turnê Caetano e Betânia.jpg`) às informações reais do projeto (Título, Ano, Serviços, Descrição).
+3.  **Novo Overlay**: Desenvolvi uma modal elegante, escura e tipográfica que exibe esses dados sobre a imagem.
+
+**Como testar:**
+- Recarregue a página.
+- Dê um **duplo clique** na imagem do "Caetano", "Ludmilla", "Ambev", etc.
+- Veja os detalhes reais extraídos do PDF aparecerem!

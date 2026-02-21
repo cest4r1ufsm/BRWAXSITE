@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRWAX MIXED MEDIA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=9">
+</head>
+
+<body>
+    <!-- INTRO OVERLAY -->
+    <div id="intro-overlay">
+        <img src="BRWAX MIXED MEDIA.png" alt="BRWAX" class="intro-logo">
+    </div>
+
+    <div id="app">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">BRWAX</div>
+                <nav class="main-nav">
+                    <a href="#" class="nav-item active">WORK</a>
+                    <a href="#" class="nav-item">INFORMATION</a>
+                </nav>
+                <div class="sub-nav">
+                    <a href="#" class="sub-item">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        SEARCH
+                    </a>
+                    <a href="#" class="sub-item">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        LIST
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-list-container" id="sidebar-projects">
+                <!-- Dynamically populated thumbnails -->
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <header class="content-header">
+                <div class="header-left">
+                    <div class="project-title" id="current-project-title">LOADING...</div>
+                    <button class="details-btn">DETAILS</button>
+                </div>
+                <div class="project-counter" id="project-counter">0 / 0</div>
+                <div class="header-right"></div>
+            </header>
+
+            <div class="image-viewer-wrapper">
+                <button class="nav-arrow left-arrow" id="nav-left">&lt;</button>
+                <div class="image-viewer" id="image-scroll-container">
+                    <!-- Images will be injected here dynamically -->
+                </div>
+                <button class="nav-arrow right-arrow" id="nav-right">&gt;</button>
+            </div>
+
+            <div class="details-panel" id="details-panel">
+                <div class="details-inner">
+                    <div class="details-meta">
+                        <span id="detail-year">2024</span>
+                        <span id="detail-services">SERVICES</span>
+                    </div>
+                    <p id="detail-description">Description goes here.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js?v=9"></script>
+</body>
+
+</html>

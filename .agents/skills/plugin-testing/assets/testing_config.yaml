@@ -1,0 +1,4 @@
+# Plugin Testing Configuration
+levels: [unit, integration, e2e]
+validation: [structure, frontmatter, functionality]
+tools: [plugin_validate, manual_testing]

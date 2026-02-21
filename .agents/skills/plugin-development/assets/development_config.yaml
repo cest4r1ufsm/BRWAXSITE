@@ -1,0 +1,3 @@
+# Plugin Development Configuration
+workflow: [design, implement, test, validate, publish]
+tools: [claude_code_cli, plugin_validate, marketplace_sync]

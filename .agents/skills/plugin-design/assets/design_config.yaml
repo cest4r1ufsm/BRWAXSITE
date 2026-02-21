@@ -1,0 +1,3 @@
+# Plugin Design Configuration
+principles: [modularity, reusability, extensibility, consistency]
+patterns: [agent_skill_bonding, golden_format, command_routing]
