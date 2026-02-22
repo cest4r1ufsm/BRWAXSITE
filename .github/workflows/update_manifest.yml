@@ -19,56 +19,61 @@ jobs:
 
       - name: Generate manifest from folders
         run: |
-          echo "[" > assets/projects_manifest.json
-          first=true
-          for folder in assets/extracted_pdf_images/*/; do
-            folder_name=$(basename "$folder")
-            
-            # Skip hidden folders
-            [[ "$folder_name" == .* ]] && continue
-            
-            # Collect image filenames
-            web_images=""
-            for img in "$folder"*.{jpg,jpeg,png,gif,webp,JPG,JPEG,PNG}; do
-              [ -e "$img" ] || continue
-              fname=$(basename "$img")
-              if [ -z "$web_images" ]; then
-                web_images="\"$fname\""
-              else
-                web_images="$web_images, \"$fname\""
-              fi
-            done
-            
-            # Also check web subfolder
-            if [ -d "${folder}web/" ]; then
-              for img in "${folder}web/"*.{jpg,jpeg,png,gif,webp,JPG,JPEG,PNG}; do
-                [ -e "$img" ] || continue
-                fname=$(basename "$img")
-                if [ -z "$web_images" ]; then
-                  web_images="\"$fname\""
-                else
-                  web_images="$web_images, \"$fname\""
-                fi
-              done
-            fi
-            
-            if [ "$first" = true ]; then
-              first=false
-            else
-              echo "," >> assets/projects_manifest.json
-            fi
-            
-            cat >> assets/projects_manifest.json <<EOF
-            {
-                "folder": "$folder_name",
-                "title": "$folder_name",
-                "description": "",
-                "web_images": [$web_images],
-                "mobile_images": [$web_images]
-            }
-          EOF
-          done
-          echo "]" >> assets/projects_manifest.json
+          python3 << 'PYEOF'
+          import os, json
+
+          base = "assets/extracted_pdf_images"
+          projects = []
+          valid_ext = {'.jpg', '.jpeg', '.png', '.gif', '.webp'}
+
+          for folder_name in sorted(os.listdir(base)):
+              folder_path = os.path.join(base, folder_name)
+              if not os.path.isdir(folder_path) or folder_name.startswith('.'):
+                  continue
+
+              web_images = []
+              mobile_images = []
+
+              # Check images directly in folder root
+              for f in sorted(os.listdir(folder_path)):
+                  if os.path.isfile(os.path.join(folder_path, f)):
+                      if os.path.splitext(f)[1].lower() in valid_ext:
+                          web_images.append(f)
+                          mobile_images.append(f)
+
+              # Check images in web/ subfolder
+              web_sub = os.path.join(folder_path, "web")
+              if os.path.isdir(web_sub):
+                  for f in sorted(os.listdir(web_sub)):
+                      if os.path.isfile(os.path.join(web_sub, f)):
+                          if os.path.splitext(f)[1].lower() in valid_ext:
+                              web_images.append("web/" + f)
+                              mobile_images.append("web/" + f)
+
+              # Check images in mobile/ subfolder
+              mobile_sub = os.path.join(folder_path, "mobile")
+              if os.path.isdir(mobile_sub):
+                  mobile_images_sub = []
+                  for f in sorted(os.listdir(mobile_sub)):
+                      if os.path.isfile(os.path.join(mobile_sub, f)):
+                          if os.path.splitext(f)[1].lower() in valid_ext:
+                              mobile_images_sub.append("mobile/" + f)
+                  if mobile_images_sub:
+                      mobile_images = mobile_images_sub
+
+              projects.append({
+                  "folder": folder_name,
+                  "title": folder_name,
+                  "description": "",
+                  "web_images": web_images,
+                  "mobile_images": mobile_images
+              })
+
+          with open("assets/projects_manifest.json", "w", encoding="utf-8") as f:
+              json.dump(projects, f, indent=4, ensure_ascii=False)
+
+          print(f"Generated manifest with {len(projects)} projects")
+          PYEOF
 
       - name: Commit and push manifest
         run: |
