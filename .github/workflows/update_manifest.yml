@@ -1,0 +1,79 @@
+name: Update Projects Manifest
+
+on:
+  push:
+    paths:
+      - 'assets/extracted_pdf_images/**'
+    branches:
+      - main
+
+jobs:
+  update-manifest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate manifest from folders
+        run: |
+          echo "[" > assets/projects_manifest.json
+          first=true
+          for folder in assets/extracted_pdf_images/*/; do
+            folder_name=$(basename "$folder")
+            
+            # Skip hidden folders
+            [[ "$folder_name" == .* ]] && continue
+            
+            # Collect image filenames
+            web_images=""
+            for img in "$folder"*.{jpg,jpeg,png,gif,webp,JPG,JPEG,PNG}; do
+              [ -e "$img" ] || continue
+              fname=$(basename "$img")
+              if [ -z "$web_images" ]; then
+                web_images="\"$fname\""
+              else
+                web_images="$web_images, \"$fname\""
+              fi
+            done
+            
+            # Also check web subfolder
+            if [ -d "${folder}web/" ]; then
+              for img in "${folder}web/"*.{jpg,jpeg,png,gif,webp,JPG,JPEG,PNG}; do
+                [ -e "$img" ] || continue
+                fname=$(basename "$img")
+                if [ -z "$web_images" ]; then
+                  web_images="\"$fname\""
+                else
+                  web_images="$web_images, \"$fname\""
+                fi
+              done
+            fi
+            
+            if [ "$first" = true ]; then
+              first=false
+            else
+              echo "," >> assets/projects_manifest.json
+            fi
+            
+            cat >> assets/projects_manifest.json <<EOF
+            {
+                "folder": "$folder_name",
+                "title": "$folder_name",
+                "description": "",
+                "web_images": [$web_images],
+                "mobile_images": [$web_images]
+            }
+          EOF
+          done
+          echo "]" >> assets/projects_manifest.json
+
+      - name: Commit and push manifest
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git add assets/projects_manifest.json
+          git diff --cached --quiet || git commit -m "Auto-update projects_manifest.json"
+          git push
