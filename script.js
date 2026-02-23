@@ -25,7 +25,8 @@ async function init() {
     try {
         const resp = await fetch(`assets/projects_manifest.json?t=${Date.now()}`);
         if (resp.ok) {
-            metadata = await resp.json();
+            let json = await resp.json();
+            metadata = json.projects ? json.projects : json;
         }
     } catch (e) {
         console.warn("Could not load projects_manifest.json");
@@ -95,7 +96,8 @@ function selectProject(index) {
                     const slide = document.createElement('div');
                     slide.className = 'image-slide';
                     const img = document.createElement('img');
-                    img.src = `assets/extracted_pdf_images/${proj.folder}/${filename}`;
+                    // Handle both CMS paths (starts with / or assets/) and old bare filenames
+                    img.src = filename.includes('/') ? filename : `assets/extracted_pdf_images/${proj.folder}/${filename}`;
                     img.alt = proj.title;
                     img.onload = () => { img.style.opacity = '1'; };
                     slide.appendChild(img);
