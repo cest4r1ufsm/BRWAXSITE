@@ -32,7 +32,7 @@ body {
 }
 
 .intro-logo {
-    width: 325px;
+    width: 512px;
     height: auto;
     opacity: 0;
     filter: invert(0);
