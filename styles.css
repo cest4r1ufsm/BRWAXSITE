@@ -370,7 +370,22 @@ body {
     }
 
     .project-list-container {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 10px 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .project-list-container::-webkit-scrollbar {
         display: none;
+    }
+
+    .sidebar-list-item {
+        flex: 0 0 auto;
     }
 
     .main-content {
@@ -392,7 +407,4 @@ body {
         display: none;
     }
 
-    .nav-arrow {
-        display: none;
-    }
 }
