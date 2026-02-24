@@ -628,15 +628,6 @@
         "YOUTUBE SHORTS BRASIL - 6.jpg",
         "YOUTUBE SHORTS BRASIL - 7.jpg"
       ]
-    },
-    {
-      "title": "testefinal",
-      "folder": "teste final",
-      "description": "teste final",
-      "web_images": [
-        "/assets/extracted_pdf_images/header_plano notificações.png"
-      ],
-      "mobile_images": []
     }
   ]
 }
