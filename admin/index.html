@@ -4,12 +4,105 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BRWAX Admin Panel</title>
+    <title>BRWAX Admin</title>
+    <style>
+        body {
+            margin: 0;
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #auth-screen {
+            text-align: center;
+        }
+
+        #auth-screen h1 {
+            font-size: 16px;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        input {
+            padding: 12px;
+            font-size: 14px;
+            border: 1px solid #333;
+            background: #000;
+            color: #fff;
+            border-radius: 4px;
+            outline: none;
+            text-align: center;
+            width: 200px;
+        }
+
+        input:focus {
+            border-color: #ff00ff;
+        }
+
+        button {
+            margin-top: 16px;
+            padding: 12px 24px;
+            background: #fff;
+            color: #000;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 12px;
+        }
+
+        button:hover {
+            background: #ff00ff;
+            color: #fff;
+        }
+
+        #error-msg {
+            color: #ff00ff;
+            font-size: 12px;
+            margin-top: 16px;
+            opacity: 0;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Include Sveltia CMS -->
-    <script type="module" src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+
+    <div id="auth-screen">
+        <h1>BRWAX Admin</h1>
+        <input type="password" id="pw-input" placeholder="Password" autofocus><br>
+        <button onclick="checkPw()">Enter</button>
+        <div id="error-msg">Incorrect Password</div>
+    </div>
+
+    <script>
+        // Simple client-side protection (real security is handled by GitHub Auth in CMS)
+        function checkPw() {
+            var pw = document.getElementById('pw-input').value;
+            if (pw === 'brwax2026') {
+                document.getElementById('auth-screen').style.display = 'none';
+                var script = document.createElement('script');
+                script.type = 'module';
+                script.src = 'https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js';
+                document.body.appendChild(script);
+            } else {
+                document.getElementById('error-msg').style.opacity = '1';
+                setTimeout(() => document.getElementById('error-msg').style.opacity = '0', 2000);
+            }
+        }
+
+        document.getElementById('pw-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkPw();
+        });
+    </script>
 </body>
 
 </html>
