@@ -310,6 +310,9 @@ body {
     opacity: 0;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     border-radius: 4px;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: opacity, transform;
 }
 
 .details-panel {
@@ -380,5 +383,16 @@ body {
 
     .image-viewer {
         padding: 20px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .image-viewer::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-arrow {
+        display: none;
     }
 }
