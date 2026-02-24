@@ -37,8 +37,8 @@ async function init() {
         return;
     }
 
-    // Projects ALREADY sorted alphabetically in the generator but sorting again to be safe
-    projects = metadata.sort((a, b) => a.title.localeCompare(b.title));
+    // Use the exact order provided by the JSON (which the CMS configures manually)
+    projects = metadata;
 
     renderSidebar();
 
