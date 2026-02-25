@@ -30,18 +30,12 @@ collections:
                 required: false
               - name: "web_images"
                 label: "Web Images"
-                widget: "list"
-                field:
-                  name: "image"
-                  label: "Image"
-                  widget: "image"
-                  hint: "Upload or select an image for Web view"
+                widget: "image"
+                multiple: true
+                hint: "Upload or select multiple images for Web view"
               - name: "mobile_images"
                 label: "Mobile Images"
-                widget: "list"
+                widget: "image"
+                multiple: true
                 required: false
-                field:
-                  name: "image"
-                  label: "Image"
-                  widget: "image"
-                  hint: "Upload or select an image for Mobile view"
+                hint: "Upload or select multiple images for Mobile view"
