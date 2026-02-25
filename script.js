@@ -92,7 +92,10 @@ function selectProject(index) {
                 : "web";
 
             if (imgArray && imgArray.length > 0) {
-                imgArray.forEach(filename => {
+                // Sort images alphanumerically by filename (e.g., 1.jpg, 2.jpg, 10.jpg)
+                const sortedArray = [...imgArray].sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+
+                sortedArray.forEach(filename => {
                     const slide = document.createElement('div');
                     slide.className = 'image-slide';
                     const img = document.createElement('img');

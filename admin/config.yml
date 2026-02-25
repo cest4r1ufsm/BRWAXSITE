@@ -32,10 +32,10 @@ collections:
                 label: "Web Images"
                 widget: "image"
                 multiple: true
-                hint: "Upload or select multiple images for Web view"
+                hint: "Upload multiple images. Name files alphabetically (e.g. 01_capa.jpg, 02_foto.jpg) to control display order."
               - name: "mobile_images"
                 label: "Mobile Images"
                 widget: "image"
                 multiple: true
                 required: false
-                hint: "Upload or select multiple images for Mobile view"
+                hint: "Upload multiple images. Name files alphabetically (e.g. 01_capa.jpg, 02_foto.jpg) to control display order."
