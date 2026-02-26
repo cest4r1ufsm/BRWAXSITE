@@ -93,6 +93,18 @@
                 script.type = 'module';
                 script.src = 'https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js';
                 document.body.appendChild(script);
+
+                // Inject a watcher to disable the 'Delete' asset button anywhere in the CMS
+                const observer = new MutationObserver(() => {
+                    const buttons = document.querySelectorAll('button, [role="button"], [role="menuitem"]');
+                    buttons.forEach(btn => {
+                        const t = btn.textContent.trim().toUpperCase();
+                        if (t === 'DELETE' || t === 'EXCLUIR') {
+                            btn.style.display = 'none';
+                        }
+                    });
+                });
+                observer.observe(document.body, { childList: true, subtree: true });
             } else {
                 document.getElementById('error-msg').style.opacity = '1';
                 setTimeout(() => document.getElementById('error-msg').style.opacity = '0', 2000);
