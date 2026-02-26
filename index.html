@@ -23,8 +23,8 @@
             <div class="sidebar-header">
                 <div class="logo">BRWAX</div>
                 <nav class="main-nav">
-                    <a href="#" class="nav-item active">WORK</a>
-                    <a href="#" class="nav-item">INFORMATION</a>
+                    <a href="#" class="nav-item active" id="nav-work-btn">WORK</a>
+                    <a href="#" class="nav-item" id="nav-info-btn">INFORMATION</a>
                 </nav>
                 <div class="sub-nav">
                     <a href="#" class="sub-item">
@@ -84,6 +84,14 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- INFORMATION MODAL -->
+    <div id="info-modal" class="info-modal-overlay">
+        <div class="info-modal-content">
+            <button id="close-info-btn" class="info-close-btn">&times;</button>
+            <div id="info-text-container" class="info-text">Carregando...</div>
+        </div>
     </div>
 
     <script src="script.js?v=9"></script>

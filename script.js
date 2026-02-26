@@ -21,6 +21,20 @@ let currentIndex = 0;
 async function init() {
     let metadata = [];
 
+    // Load CMS information text
+    try {
+        const infoResp = await fetch(`assets/information.json?t=${Date.now()}`);
+        if (infoResp.ok) {
+            const infoData = await infoResp.json();
+            const textContainer = document.getElementById('info-text-container');
+            if (textContainer && infoData.text) {
+                textContainer.textContent = infoData.text;
+            }
+        }
+    } catch (e) {
+        console.warn("Could not load information.json");
+    }
+
     // Load metadata - This is now the source of truth for projects and their images directly from the folders
     try {
         const resp = await fetch(`assets/projects_manifest.json?t=${Date.now()}`);
@@ -47,6 +61,38 @@ async function init() {
     }
 
     setupDetailsToggle();
+    setupInfoModal();
+}
+
+function setupInfoModal() {
+    const infoBtn = document.getElementById('nav-info-btn');
+    const workBtn = document.getElementById('nav-work-btn');
+    const modal = document.getElementById('info-modal');
+    const closeBtn = document.getElementById('close-info-btn');
+
+    if (infoBtn && modal && closeBtn) {
+        infoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.classList.add('active');
+            if (workBtn) workBtn.classList.remove('active');
+            infoBtn.classList.add('active');
+        });
+
+        const closeModal = () => {
+            modal.classList.remove('active');
+            infoBtn.classList.remove('active');
+            if (workBtn) workBtn.classList.add('active');
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+
+        // Close on clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    }
 }
 
 function renderSidebar() {

@@ -39,3 +39,14 @@ collections:
                 multiple: true
                 required: false
                 hint: "Upload multiple images. Name files alphabetically (e.g. 01_capa.jpg, 02_foto.jpg) to control display order."
+
+  - name: "site_info"
+    label: "Site Information"
+    files:
+      - name: "info"
+        label: "Information Modal"
+        file: "assets/information.json"
+        fields:
+          - name: "text"
+            label: "Text Content"
+            widget: "text"
