@@ -371,6 +371,7 @@ body {
 
     .sidebar-header {
         padding: 16px 20px 10px 20px;
+        position: relative;
     }
 
     .logo {
@@ -378,9 +379,17 @@ body {
     }
 
     .main-nav {
-        flex-direction: row;
-        gap: 16px;
-        margin-bottom: 20px;
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 0;
+        align-items: flex-end;
+    }
+
+    .main-nav .nav-item {
+        align-self: flex-end;
     }
 
     .project-list-container {
