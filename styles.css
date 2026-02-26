@@ -418,6 +418,14 @@ body {
     .content-header {
         padding: 0 20px;
         height: 60px;
+        position: relative;
+    }
+
+    .details-btn {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     .image-viewer-wrapper {
