@@ -369,6 +369,20 @@ body {
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
+    .sidebar-header {
+        padding: 16px 20px 10px 20px;
+    }
+
+    .logo {
+        margin-bottom: 16px;
+    }
+
+    .main-nav {
+        flex-direction: row;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
     .project-list-container {
         display: flex;
         flex-direction: row;
@@ -389,15 +403,20 @@ body {
     }
 
     .main-content {
-        height: calc(100vh - 160px);
+        height: calc(100vh - 120px);
     }
 
     .content-header {
         padding: 0 20px;
+        height: 60px;
+    }
+
+    .image-viewer-wrapper {
+        align-items: flex-start;
     }
 
     .image-viewer {
-        padding: 20px;
+        padding: 10px 20px;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
