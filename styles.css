@@ -430,6 +430,7 @@ body {
 
     .image-viewer-wrapper {
         align-items: flex-start;
+        margin-top: -30px;
     }
 
     .image-viewer {
