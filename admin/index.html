@@ -96,10 +96,25 @@
 
                 // Inject a watcher to disable the 'Delete' and 'Copy' asset buttons anywhere in the CMS
                 const observer = new MutationObserver(() => {
+                    // Check if we are physically navigating the global Assets page, not a collection editing popup
+                    const inGlobalAssets = window.location.hash.startsWith('#/assets');
+
                     const buttons = document.querySelectorAll('button, [role="button"], [role="menuitem"]');
                     buttons.forEach(btn => {
                         const t = btn.textContent.trim().toUpperCase();
-                        if (t === 'DELETE' || t === 'EXCLUIR' || t === 'COPY' || t === 'COPIAR') {
+
+                        // Always hide EXCLUIR/DELETE anywhere in the CMS
+                        if (t === 'DELETE' || t === 'EXCLUIR') {
+                            btn.style.display = 'none';
+                        }
+
+                        // Hide COPY menus completely
+                        if (t.includes('COPY') || t.includes('COPIAR') || t.includes('PUBLIC URL') || t.includes('FILE PATH') || t.includes('FILE DATA')) {
+                            btn.style.display = 'none';
+                        }
+
+                        // Hide UPLOAD only in the Global Assets screen (keep it in the Media Modal so they can upload to projects)
+                        if (inGlobalAssets && (t.includes('UPLOAD') || t.includes('ENVIAR'))) {
                             btn.style.display = 'none';
                         }
                     });
