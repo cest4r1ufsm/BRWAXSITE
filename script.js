@@ -103,6 +103,10 @@ function selectProject(index) {
                     img.src = filename.includes('/') ? filename : `assets/extracted_pdf_images/${proj.folder}/${filename}`;
                     img.alt = proj.title;
                     img.onload = () => { img.style.opacity = '1'; };
+                    img.onerror = () => {
+                        console.warn('Image removed from CMS, hiding empty slide:', img.src);
+                        slide.remove();
+                    };
                     slide.appendChild(img);
                     container.appendChild(slide);
                 });
