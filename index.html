@@ -35,7 +35,7 @@
                         </svg>
                         SEARCH
                     </a>
-                    <a href="#" class="sub-item">
+                    <a href="#" class="sub-item" id="list-btn">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <line x1="8" y1="6" x2="21" y2="6"></line>
@@ -92,6 +92,19 @@
 
         <!-- MOBILE FEED (Instagram-style, hidden on desktop) -->
         <div id="mobile-feed"></div>
+    </div>
+
+    <!-- LIST PANEL OVERLAY -->
+    <div id="list-panel" class="list-panel-overlay">
+        <div class="list-panel-content">
+            <div class="list-panel-header">
+                <span class="list-panel-title">ALL PROJECTS</span>
+                <button id="close-list-btn" class="list-close-btn">&times;</button>
+            </div>
+            <div class="list-panel-items" id="list-panel-items">
+                <!-- Populated by JS -->
+            </div>
+        </div>
     </div>
 
     <!-- INFORMATION MODAL -->

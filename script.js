@@ -67,6 +67,54 @@ async function init() {
     setupDetailsToggle();
     setupInfoModal();
     setupSearch();
+    setupListPanel();
+}
+
+// ===== LIST PANEL =====
+function setupListPanel() {
+    const btn = document.getElementById('list-btn');
+    const panel = document.getElementById('list-panel');
+    const closeBtn = document.getElementById('close-list-btn');
+    const itemsContainer = document.getElementById('list-panel-items');
+    if (!btn || !panel || !closeBtn || !itemsContainer) return;
+
+    // Populate items
+    itemsContainer.innerHTML = '';
+    projects.forEach((proj, idx) => {
+        const item = document.createElement('div');
+        item.className = 'list-panel-item';
+        item.textContent = proj.title;
+        item.addEventListener('click', () => {
+            panel.classList.remove('active');
+
+            if (config.isMobile) {
+                // Scroll feed to the target card
+                const cards = document.querySelectorAll('.feed-card');
+                if (cards[idx]) {
+                    cards[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            } else {
+                selectProject(idx);
+            }
+        });
+        itemsContainer.appendChild(item);
+    });
+
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        panel.classList.add('active');
+    });
+
+    closeBtn.addEventListener('click', () => {
+        panel.classList.remove('active');
+    });
+
+    // Close on backdrop click
+    panel.addEventListener('click', (e) => {
+        if (e.target === panel) {
+            panel.classList.remove('active');
+        }
+    });
 }
 
 // ===== SEARCH =====
