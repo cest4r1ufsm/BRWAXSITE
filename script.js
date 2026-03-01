@@ -54,16 +54,124 @@ async function init() {
     // Use the exact order provided by the JSON (which the CMS configures manually)
     projects = metadata;
 
-    renderSidebar();
-
-    if (projects.length > 0) {
-        selectProject(0);
+    // ── Branch: mobile feed vs desktop viewer ──
+    if (config.isMobile) {
+        renderMobileFeed();
+    } else {
+        renderSidebar();
+        if (projects.length > 0) {
+            selectProject(0);
+        }
     }
 
     setupDetailsToggle();
     setupInfoModal();
 }
 
+// ===== MOBILE FEED (Instagram-style) =====
+function renderMobileFeed() {
+    const feed = document.getElementById('mobile-feed');
+    if (!feed) return;
+    feed.innerHTML = '';
+
+    projects.forEach((proj, idx) => {
+        const imgArray = proj.mobile_images && proj.mobile_images.length > 0
+            ? proj.mobile_images
+            : proj.web_images;
+
+        if (!imgArray || imgArray.length === 0) return;
+
+        const sorted = [...imgArray].sort((a, b) =>
+            a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
+        );
+
+        // ── Card wrapper ──
+        const card = document.createElement('div');
+        card.className = 'feed-card';
+
+        // ── Header ──
+        const header = document.createElement('div');
+        header.className = 'feed-card-header';
+
+        const name = document.createElement('span');
+        name.className = 'feed-project-name';
+        name.textContent = proj.title;
+
+        const counter = document.createElement('span');
+        counter.className = 'feed-img-counter';
+        counter.textContent = `1 / ${sorted.length}`;
+
+        header.appendChild(name);
+        header.appendChild(counter);
+        card.appendChild(header);
+
+        // ── Carousel ──
+        const carousel = document.createElement('div');
+        carousel.className = 'feed-carousel';
+
+        const track = document.createElement('div');
+        track.className = 'feed-carousel-track';
+
+        sorted.forEach(filename => {
+            const slide = document.createElement('div');
+            slide.className = 'feed-slide';
+            const img = document.createElement('img');
+            img.src = filename.includes('/') ? filename : `assets/extracted_pdf_images/${proj.folder}/${filename}`;
+            img.alt = proj.title;
+            img.loading = 'lazy';
+            img.onload = () => { img.style.opacity = '1'; };
+            img.onerror = () => {
+                console.warn('Image not found, hiding slide:', img.src);
+                slide.remove();
+            };
+            slide.appendChild(img);
+            track.appendChild(slide);
+        });
+
+        carousel.appendChild(track);
+
+        // ── Dots ──
+        const dots = document.createElement('div');
+        dots.className = 'feed-dots';
+        if (sorted.length > 15) dots.classList.add('compact');
+
+        sorted.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'feed-dot';
+            if (i === 0) dot.classList.add('active');
+            dots.appendChild(dot);
+        });
+
+        carousel.appendChild(dots);
+        card.appendChild(carousel);
+
+        // ── Scroll listener for dots + counter ──
+        track.addEventListener('scroll', () => {
+            const slideW = track.clientWidth;
+            if (slideW === 0) return;
+            const current = Math.round(track.scrollLeft / slideW);
+
+            // Update counter
+            counter.textContent = `${current + 1} / ${sorted.length}`;
+
+            // Update dots
+            dots.querySelectorAll('.feed-dot').forEach((d, di) => {
+                d.classList.toggle('active', di === current);
+            });
+        }, { passive: true });
+
+        feed.appendChild(card);
+
+        // ── Divider between cards ──
+        if (idx < projects.length - 1) {
+            const divider = document.createElement('div');
+            divider.className = 'feed-divider';
+            feed.appendChild(divider);
+        }
+    });
+}
+
+// ===== DESKTOP: SIDEBAR + VIEWER (unchanged) =====
 function setupInfoModal() {
     const infoBtn = document.getElementById('nav-info-btn');
     const workBtn = document.getElementById('nav-work-btn');
@@ -218,39 +326,41 @@ function setupDetailsToggle() {
 document.addEventListener("DOMContentLoaded", () => {
     init();
 
-    // Enable manual navigation with arrows
-    const scrollContainer = document.getElementById('image-scroll-container');
-    const navLeft = document.getElementById('nav-left');
-    const navRight = document.getElementById('nav-right');
+    // Enable manual navigation with arrows (desktop only)
+    if (!config.isMobile) {
+        const scrollContainer = document.getElementById('image-scroll-container');
+        const navLeft = document.getElementById('nav-left');
+        const navRight = document.getElementById('nav-right');
 
-    if (scrollContainer && navLeft && navRight) {
-        let isScrolling = false;
+        if (scrollContainer && navLeft && navRight) {
+            let isScrolling = false;
 
-        const scrollImages = (direction) => {
-            if (isScrolling) return;
-            isScrolling = true;
+            const scrollImages = (direction) => {
+                if (isScrolling) return;
+                isScrolling = true;
 
-            // Scroll by exactly one slide's width
-            const scrollAmount = scrollContainer.clientWidth;
+                // Scroll by exactly one slide's width
+                const scrollAmount = scrollContainer.clientWidth;
 
-            scrollContainer.scrollBy({
-                left: direction * scrollAmount,
-                behavior: 'smooth'
-            });
+                scrollContainer.scrollBy({
+                    left: direction * scrollAmount,
+                    behavior: 'smooth'
+                });
 
-            setTimeout(() => {
-                isScrolling = false;
-            }, 500); // Wait for smooth scroll to finish
-        };
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 500); // Wait for smooth scroll to finish
+            };
 
-        navLeft.addEventListener('click', () => scrollImages(-1));
-        navRight.addEventListener('click', () => scrollImages(1));
+            navLeft.addEventListener('click', () => scrollImages(-1));
+            navRight.addEventListener('click', () => scrollImages(1));
 
-        // Disable horizontal wheel scrolling so arrows are the only way
-        scrollContainer.addEventListener('wheel', (evt) => {
-            if (Math.abs(evt.deltaX) > Math.abs(evt.deltaY)) {
-                evt.preventDefault();
-            }
-        }, { passive: false });
+            // Disable horizontal wheel scrolling so arrows are the only way
+            scrollContainer.addEventListener('wheel', (evt) => {
+                if (Math.abs(evt.deltaX) > Math.abs(evt.deltaY)) {
+                    evt.preventDefault();
+                }
+            }, { passive: false });
+        }
     }
 });

@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=9">
+    <link rel="stylesheet" href="styles.css?v=10">
 </head>
 
 <body>
@@ -18,7 +18,7 @@
     </div>
 
     <div id="app">
-        <!-- SIDEBAR -->
+        <!-- SIDEBAR (desktop only on mobile feed mode) -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="logo">BRWAX</div>
@@ -55,7 +55,7 @@
             </div>
         </aside>
 
-        <!-- MAIN CONTENT -->
+        <!-- MAIN CONTENT (desktop viewer) -->
         <main class="main-content">
             <header class="content-header">
                 <div class="header-left">
@@ -84,6 +84,9 @@
                 </div>
             </div>
         </main>
+
+        <!-- MOBILE FEED (Instagram-style, hidden on desktop) -->
+        <div id="mobile-feed"></div>
     </div>
 
     <!-- INFORMATION MODAL -->
@@ -94,7 +97,7 @@
         </div>
     </div>
 
-    <script src="script.js?v=9"></script>
+    <script src="script.js?v=10"></script>
 </body>
 
 </html>
