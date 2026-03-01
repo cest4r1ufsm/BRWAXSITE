@@ -27,7 +27,7 @@
                     <a href="#" class="nav-item" id="nav-info-btn">INFORMATION</a>
                 </nav>
                 <div class="sub-nav">
-                    <a href="#" class="sub-item">
+                    <a href="#" class="sub-item" id="search-btn">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <circle cx="11" cy="11" r="8"></circle>
@@ -54,6 +54,11 @@
                 <!-- Dynamically populated thumbnails -->
             </div>
         </aside>
+
+        <!-- SEARCH BAR (hidden by default) -->
+        <div id="search-bar" class="search-bar">
+            <input type="text" id="search-input" placeholder="Search projects..." autocomplete="off" />
+        </div>
 
         <!-- MAIN CONTENT (desktop viewer) -->
         <main class="main-content">

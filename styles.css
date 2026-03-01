@@ -422,6 +422,44 @@ body {
     letter-spacing: 0.02em;
 }
 
+/* ===== SEARCH BAR ===== */
+.search-bar {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 20px;
+    background: #0a0a0a;
+    border-bottom: 1px solid transparent;
+}
+
+.search-bar.active {
+    max-height: 60px;
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#search-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f2f2f2;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    padding: 10px 14px;
+    outline: none;
+    text-transform: uppercase;
+}
+
+#search-input::placeholder {
+    color: rgba(242, 242, 242, 0.3);
+    text-transform: uppercase;
+}
+
+#search-input:focus {
+    border-color: #ff00ff;
+}
+
 /* Hide mobile feed on desktop */
 #mobile-feed {
     display: none;

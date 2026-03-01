@@ -66,6 +66,53 @@ async function init() {
 
     setupDetailsToggle();
     setupInfoModal();
+    setupSearch();
+}
+
+// ===== SEARCH =====
+function setupSearch() {
+    const btn = document.getElementById('search-btn');
+    const bar = document.getElementById('search-bar');
+    const input = document.getElementById('search-input');
+    if (!btn || !bar || !input) return;
+
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isOpen = bar.classList.toggle('active');
+        if (isOpen) {
+            input.focus();
+        } else {
+            input.value = '';
+            filterProjects('');
+        }
+    });
+
+    input.addEventListener('input', () => {
+        filterProjects(input.value);
+    });
+}
+
+function filterProjects(query) {
+    const q = query.trim().toLowerCase();
+
+    // Mobile feed cards
+    document.querySelectorAll('.feed-card').forEach(card => {
+        const name = card.querySelector('.feed-project-name');
+        if (!name) return;
+        const match = !q || name.textContent.toLowerCase().includes(q);
+        card.style.display = match ? '' : 'none';
+        // Also hide/show the divider after this card
+        const next = card.nextElementSibling;
+        if (next && next.classList.contains('feed-divider')) {
+            next.style.display = match ? '' : 'none';
+        }
+    });
+
+    // Desktop sidebar items
+    document.querySelectorAll('.sidebar-list-item').forEach(item => {
+        const match = !q || item.textContent.toLowerCase().includes(q);
+        item.style.display = match ? '' : 'none';
+    });
 }
 
 // ===== MOBILE FEED (Instagram-style) =====
