@@ -489,6 +489,7 @@ body {
     /* Each project card = one "post" */
     .feed-card {
         scroll-snap-align: start;
+        scroll-snap-stop: always;
         flex: 0 0 auto;
         width: 100%;
         display: flex;
